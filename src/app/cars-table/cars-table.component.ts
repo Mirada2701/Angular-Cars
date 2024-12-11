@@ -19,7 +19,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition,MatSnackBarVerticalPosition}
 })
 
 export class CarsTableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'image' ,'brand', 'model', 'category', 'engine', 'year', 'color','price', 'actions'];
+  displayedColumns: string[] = ['id', 'image', 'quantity' ,'brand', 'model', 'category', 'engine', 'year', 'color','price', 'actions'];
   dataSource = new MatTableDataSource<CarModel>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;

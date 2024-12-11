@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CarModel } from '../models/cars';
+import { BrandModel, CarModel, CategoryModel, EngineModel } from '../models/cars';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -18,6 +18,18 @@ export class CarsService {
   delete(id:number): Observable<any>
   {
     return this.http.delete(api + id);
+  }
+  create(model: CarModel): Observable<any> {
+    return this.http.post(api, model);
+  }
+  getCategories(): Observable<CategoryModel[]> {
+    return this.http.get<CategoryModel[]>(api + "categories");
+  }
+  getBrands(): Observable<BrandModel[]> {
+    return this.http.get<BrandModel[]>(api + "brands");
+  }
+  getEngines(): Observable<EngineModel[]> {
+    return this.http.get<EngineModel[]>(api + "engines");
   }
 }
 // const ELEMENT_DATA: CarModel[] = [

@@ -1,0 +1,80 @@
+<h1>Create new Car</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field>
+    <mat-label>Brand</mat-label>
+    <mat-select formControlName="brandId">
+      @for (i of brands; track i.id) {
+      <mat-option value="{{i.id}}">{{i.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Model</mat-label>
+    <input matInput formControlName="model">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="categoryId">
+      @for (i of categories; track i.id) {
+      <mat-option value="{{i.id}}">{{i.name}}</mat-option>
+      }
+    </mat-select>
+    </mat-form-field>
+  <mat-form-field>
+    <mat-label>Year</mat-label>
+    <input matInput [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field floatLabel="always">
+    <mat-label>Price</mat-label>
+    <input matInput formControlName="price" type="number" class="example-right-align" placeholder="0" />
+    <span matTextPrefix>$&nbsp;</span>
+    <span matTextSuffix>.00</span>
+  </mat-form-field>
+  <mat-form-field floatLabel="always">
+    <mat-label>Discount</mat-label>
+    <input matInput formControlName="discount" type="number" class="example-right-align" placeholder="0" />
+    <span matTextPrefix>%&nbsp;</span>
+  </mat-form-field>
+  <mat-form-field floatLabel="always">
+    <mat-label>Quantity</mat-label>
+    <input matInput formControlName="quantity" type="number" class="example-right-align" placeholder="0" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Color</mat-label>
+    <input matInput formControlName="color">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Engine</mat-label>
+    <mat-select formControlName="engineId">
+      @for (i of engines; track i.id) {
+      <mat-option value="{{i.id}}">{{i.display}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Image Url</mat-label>
+    <input matInput formControlName="imageUrl">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <div class="buttons">
+    <button type="button" (click)="back()" mat-raised-button>Back</button>
+
+    <button type="submit" mat-raised-button>Create</button>
+  </div>
+</form>
+<!-- <mat-form-field>
+    <mat-label>Select</mat-label>
+    <mat-select>
+      <mat-option value="one">First option</mat-option>
+      <mat-option value="two">Second option</mat-option>
+    </mat-select>
+  </mat-form-field> -->
+ 
