@@ -15,7 +15,7 @@ export class CarsService {
   getAll(): Observable<CarModel[]>{
     return this.http.get<CarModel[]>(api + "all");
   }
-  delete(id:number)
+  delete(id:number): Observable<any>
   {
     return this.http.delete(api + id);
   }
