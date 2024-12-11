@@ -1,13 +1,14 @@
 export interface CarModel {
     id: number;
-    brand:string
+    brandName:string
     model: string;
-    category: string;
-    engine: string;
+    categoryName?: string;
+    engineDisplay?: string;
     year: Date;
     color: string;
     price:number;
-    image: string;
+    imageUrl: string;
+    description?:string;
   }
   
   // export interface CarResponse {

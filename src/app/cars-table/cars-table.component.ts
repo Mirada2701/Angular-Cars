@@ -19,7 +19,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition,MatSnackBarVerticalPosition}
 })
 
 export class CarsTableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'brand', 'model', 'category', 'engine', 'year', 'color','price', 'actions'];
+  displayedColumns: string[] = ['id', 'image' ,'brand', 'model', 'category', 'engine', 'year', 'color','price', 'actions'];
   dataSource = new MatTableDataSource<CarModel>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
@@ -29,16 +29,17 @@ export class CarsTableComponent implements AfterViewInit {
     private dialog: MatDialog,
     private _snackBar: MatSnackBar,
   ) {
-    const ELEMENT_DATA = carsService.getAll();
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);  
-}
+    carsService.getAll().subscribe(data =>
+      this.dataSource.data = data
+    )
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
   openDialog(carBrand: string, carId: number): void {
-   const ref =  this.dialog.open(ConfirmDialogComponent, {
+    const ref = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
       enterAnimationDuration: '50ms',
       exitAnimationDuration: '50ms',
@@ -48,15 +49,17 @@ export class CarsTableComponent implements AfterViewInit {
       }
     });
 
-    ref.afterClosed().subscribe(result => {
-      if (result) {
-        this.carsService.delete(result);
-        console.log(result);
-        
-        this._snackBar.open('Deleted succesfully', 'Dismiss',{
-          horizontalPosition: "center",
-          verticalPosition: "top",
-        });
+    ref.afterClosed().subscribe(idToDelete => {
+      if (idToDelete) {
+        this.carsService.delete(idToDelete).subscribe(res =>{
+
+          this.dataSource.data = this.dataSource.data.filter(x => x.id !== idToDelete);
+
+          this._snackBar.open('Deleted succesfully', 'Dismiss', {
+            horizontalPosition: "center",
+            verticalPosition: "top",
+          });
+        })
       }
     });
   }
