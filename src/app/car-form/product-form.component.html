@@ -1,4 +1,4 @@
-<h1>Create new Car</h1>
+<h1>{{editMode ? "Edit" : "Create New"}} Car</h1>
 
 <form [formGroup]="form" (ngSubmit)="submit()">
   <mat-form-field>
@@ -67,7 +67,7 @@
   <div class="buttons">
     <button type="button" (click)="back()" mat-raised-button>Back</button>
 
-    <button type="submit" mat-raised-button>Create</button>
+    <button type="submit" mat-raised-button>{{editMode ? "Edit" : "Create"}}</button>
   </div>
 </form>
 <!-- <mat-form-field>

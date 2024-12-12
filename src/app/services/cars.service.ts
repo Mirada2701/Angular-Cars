@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BrandModel, CarModel, CategoryModel, EngineModel } from '../models/cars';
+import { BrandModel, CarModel, CategoryModel, EditCarModel, EngineModel } from '../models/cars';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -30,6 +30,12 @@ export class CarsService {
   }
   getEngines(): Observable<EngineModel[]> {
     return this.http.get<EngineModel[]>(api + "engines");
+  }
+  get(id:number): Observable<CarModel>{
+    return this.http.get<CarModel>(api + id);
+  }
+  edit(model: EditCarModel): Observable<any>{
+    return this.http.put(api, model)
   }
 }
 // const ELEMENT_DATA: CarModel[] = [

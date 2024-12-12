@@ -9,4 +9,5 @@ export const routes: Routes = [
     { path: 'about', component: AboutComponent },
     { path: '', component: HomeComponent },
     { path: 'create', component:  CarFormComponent},
+    { path: 'edit/:id', component:  CarFormComponent},
 ];

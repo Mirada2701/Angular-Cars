@@ -10,10 +10,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatSnackBar, MatSnackBarHorizontalPosition,MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cars-table',
-  imports: [MatTableModule, MatPaginatorModule,DatePipe,MatIconModule, MatButtonModule],
+  imports: [MatTableModule, MatPaginatorModule,DatePipe,MatIconModule, MatButtonModule,RouterLink],
   templateUrl: './cars-table.component.html',
   styleUrl: './cars-table.component.css'
 })

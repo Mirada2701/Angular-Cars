@@ -12,6 +12,7 @@ import { BrandModel, CarModel, CategoryModel, EngineModel } from '../models/cars
 import { DatePipe } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-form',
@@ -32,6 +33,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 export class CarFormComponent implements OnInit{
 
   form: FormGroup;
+  editMode = false;
+  car: CarModel | null = null;
+
 
   categories:CategoryModel[] =[]
   brands:BrandModel[] =[]
@@ -40,9 +44,11 @@ export class CarFormComponent implements OnInit{
   constructor(
     fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private carsService: CarsService
+    private carsService: CarsService,
+    private route: ActivatedRoute
   ) {
     this.form = fb.group({
+      id:[0],
       brandId: [0, Validators.required],
       price: [0, Validators.required],
       quantity:[0,Validators.required],
@@ -61,12 +67,23 @@ export class CarFormComponent implements OnInit{
       this.openSnackBar("Invalid data.");
       return;
     }
-    const item = this.form.value as CarModel;
-    this.carsService.create(item).subscribe(res => 
-    {
-      this.openSnackBar("Car created successfuly!");
-      this.back();
-    });
+    let model = this.form.value;
+    if (model.description === "")
+      model.description = null;
+
+
+    if (this.editMode) {
+      this.carsService.edit(model).subscribe(x => {
+        this.openSnackBar("Car was updated successfully.");
+        this.back();
+      });
+    }
+    else {
+      this.carsService.create(model).subscribe(x => {
+        this.openSnackBar("Car was created successfully.");
+        this.back();
+      });
+    }
   }
   openSnackBar(msg: string) {
     this.snackBar.open(msg, "OK", {
@@ -82,6 +99,17 @@ export class CarFormComponent implements OnInit{
     this.carsService.getCategories().subscribe(data => this.categories = data);
     this.carsService.getBrands().subscribe(data => this.brands = data);
     this.carsService.getEngines().subscribe(data => this.engines = data);
+
+    const carId = Number(this.route.snapshot.paramMap.get('id'));
+    if (carId) {
+      this.editMode = true;
+      this.carsService.get(carId).subscribe(data => {
+        this.car = data;
+        this.form.patchValue(this.car);
+        this.form.controls["categoryId"].setValue(this.car.categoryId?.toString());
+        this.form.controls["brandId"].setValue(this.car.brandId?.toString());
+        this.form.controls["engineId"].setValue(this.car.engineId?.toString());
+      });
   }
 
-}
+  }}
